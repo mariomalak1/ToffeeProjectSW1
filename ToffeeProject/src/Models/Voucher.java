@@ -5,8 +5,11 @@ public class Voucher {
     String typeOfDiscount;
     private int adminId;
     private int cartId;
-    Voucher(int i,double discount,String type,int admin_id) {
-        id = i;
+    private static int LastID = 0;
+
+    Voucher(double discount,String type,int admin_id) {
+        LastID++;
+        id = LastID;
         Discount = discount;
         typeOfDiscount = type;
         adminId = admin_id;

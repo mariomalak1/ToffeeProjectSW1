@@ -15,7 +15,7 @@ class Unit{
 public class Candy{
     private int ID;
     private String Name;
-    private float Price;
+    private double Price;
     private Unit Unit;
     private int CategoryID;
     private int LoyaltyPoints;
