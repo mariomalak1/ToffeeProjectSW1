@@ -3,6 +3,31 @@ public class Voucher {
     private int id;
     private double Discount;
     String typeOfDiscount;
+    private int adminId;
+    private int cartId;
+    Voucher(int i,double discount,String type,int admin_id) {
+        id = i;
+        Discount = discount;
+        typeOfDiscount = type;
+        adminId = admin_id;
+    }
+
+    public int getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
+    }
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
+
     public int getId() {
         return id;
     }
