@@ -58,7 +58,7 @@ public class Candy{
         Name = name;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return Price;
     }
 

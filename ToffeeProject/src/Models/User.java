@@ -1,11 +1,11 @@
 package Models;
-
 public class User {
-    private String Name;
-    private String Email;
-    private String Password;
-    private boolean Active;
-    private boolean IsAdmin;
+    protected String Name;
+    protected String Email;
+    protected String Password;
+    protected String phoneNumber;
+    protected boolean Active;
+    protected boolean IsAdmin;
 
     public void setPassword(String password){
         // encrypt it by any encryption algorithm first then save it
@@ -49,3 +49,4 @@ public class User {
         IsAdmin = false;
     }
 }
+
