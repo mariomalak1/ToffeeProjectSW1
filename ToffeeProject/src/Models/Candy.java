@@ -1,16 +1,6 @@
 package Models;
 import java.time.DateTimeException;
-
-class Unit{
-    private int ID;
-    public String unitName;
-    private static int LastID = 0;
-    Unit(String name){
-        LastID++;
-        ID = LastID;
-        unitName = name;
-    }
-}
+import java.time.LocalDateTime;
 
 public class Candy{
     private int ID;
@@ -25,17 +15,15 @@ public class Candy{
     private String ImagePath;
     private static int LastID = 0;
 
-    Candy(String name, float price, String unitName, int Category, int loyaltyPoints, int IDCreatedBy, String description, String image){
-        LastID++;
+    public Candy(int id, String name, double price, Models.Unit unit, int categoryId, int loyaltyPoints, int adminIdCreatedBY, LocalDateTime timeCreatedAt, String description, String imagePath) {
         ID = LastID;
         this.Name = name;
         this.Price = price;
-        this.CategoryID = Category;
+        this.CategoryID = categoryId;
         this.LoyaltyPoints = loyaltyPoints;
-        this.AdminIDCreatedBY = IDCreatedBy;
+        this.AdminIDCreatedBY = adminIdCreatedBY;
         this.Description = description;
-        this.ImagePath = image;
-        Models.Unit unit = new Unit(unitName);
+        this.ImagePath = imagePath;
     }
 
     public void setCategoryID(int categoryID) {
@@ -82,8 +70,8 @@ public class Candy{
         AdminIDCreatedBY = adminIDCreatedBY;
     }
 
-    public DateTimeException getTimeCreatedAt() {
-        return TimeCreatedAt;
+    public String getTimeCreatedAt() {
+        return TimeCreatedAt.toString();
     }
 
     public void setTimeCreatedAt(DateTimeException timeCreatedAt) {
@@ -106,11 +94,11 @@ public class Candy{
         ImagePath = imagePath;
     }
 
-    public String getUnit() {
-        return Unit.unitName;
+    public Unit getUnit() {
+        return Unit;
     }
 
-    public void setUnit(String unitName) {
-        Models.Unit unit = new Unit(unitName);
+    public void setUnit(Unit unit) {
+        this.Unit = unit;
     }
 }
