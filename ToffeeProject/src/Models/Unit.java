@@ -5,7 +5,7 @@ public class Unit {
     public String unitName;
     private static int LastID = 0;
 
-    public Unit(int id, String name) {
+    public Unit(String name) {
         LastID++;
         ID = LastID;
         unitName = name;

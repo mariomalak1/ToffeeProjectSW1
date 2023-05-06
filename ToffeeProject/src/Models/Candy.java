@@ -1,29 +1,31 @@
 package Models;
-import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
 public class Candy{
-    private int ID;
+    private final int ID;
     private String Name;
     private double Price;
     private Unit Unit;
     private int CategoryID;
     private int LoyaltyPoints;
     private int AdminIDCreatedBY;
-    private DateTimeException TimeCreatedAt;
+    private final LocalDateTime TimeCreatedAt;
     private String Description;
     private String ImagePath;
     private static int LastID = 0;
 
-    public Candy(int id, String name, double price, Models.Unit unit, int categoryId, int loyaltyPoints, int adminIdCreatedBY, LocalDateTime timeCreatedAt, String description, String imagePath) {
+    public Candy(String name, double price, Models.Unit unit, int categoryId, int loyaltyPoints, int adminIdCreatedBY, String description, String imagePath) {
+        LastID++;
         ID = LastID;
         this.Name = name;
         this.Price = price;
         this.CategoryID = categoryId;
         this.LoyaltyPoints = loyaltyPoints;
         this.AdminIDCreatedBY = adminIdCreatedBY;
-        this.Description = description;
         this.ImagePath = imagePath;
+        this.Unit = unit;
+        this.Description = description;
+        TimeCreatedAt = LocalDateTime.now();
     }
 
     public void setCategoryID(int categoryID) {
@@ -50,7 +52,7 @@ public class Candy{
         return Price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         Price = price;
     }
 
@@ -72,10 +74,6 @@ public class Candy{
 
     public String getTimeCreatedAt() {
         return TimeCreatedAt.toString();
-    }
-
-    public void setTimeCreatedAt(DateTimeException timeCreatedAt) {
-        TimeCreatedAt = timeCreatedAt;
     }
 
     public String getDescription() {

@@ -4,8 +4,11 @@ public class Order {
     private int candyId;
     private int quantity;
     private int cartId;
+    private static int LastId = 0;
 
-    Order(int candyID, int quantity, int cartID){
+    public Order(int candyID, int quantity, int cartID){
+        LastId++;
+        this.id = LastId;
         this.candyId = candyID;
         this.quantity = quantity;
         this.cartId = cartID;
@@ -29,6 +32,7 @@ public class Order {
         return quantity;
     }
 
-
-
+    public int getCandyId() {
+        return candyId;
+    }
 }
