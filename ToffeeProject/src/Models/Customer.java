@@ -5,7 +5,7 @@ public class Customer extends User {
     private List<Cart> Carts;
 
 
-    public Customer(String name, String email, String password, String phoneNumber, boolean admin) {
+    public Customer(int id, String name, String email, String password, String phoneNumber, boolean admin) {
         super(name, email, password, phoneNumber, admin);
         loyaltyPoints = 0;
         Carts = new ArrayList<Cart>();

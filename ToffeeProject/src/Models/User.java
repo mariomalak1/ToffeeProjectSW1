@@ -1,5 +1,6 @@
 package Models;
 public class User {
+    protected int ID;
     protected String Name;
     protected String Email;
     protected String Password;
@@ -65,5 +66,8 @@ public class User {
         return this.PhoneNumber;
     }
 
+    public int getID() {
+        return ID;
+    }
 }
 
