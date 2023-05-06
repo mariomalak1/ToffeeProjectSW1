@@ -3,9 +3,17 @@ public class User {
     protected String Name;
     protected String Email;
     protected String Password;
-    protected String phoneNumber;
-    protected boolean Active;
+    protected String PhoneNumber;
+    protected boolean Active = false;
     protected boolean IsAdmin;
+
+    public User(String name, String email, String password, String phoneNumber, boolean admin){
+        Name = name;
+        Email = email;
+        Password = password;
+        PhoneNumber = phoneNumber;
+        IsAdmin = admin;
+    }
 
     public void setPassword(String password){
         // encrypt it by any encryption algorithm first then save it
@@ -50,11 +58,11 @@ public class User {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.PhoneNumber = phoneNumber;
     }
 
     public String getPhoneNumber(){
-        return this.phoneNumber;
+        return this.PhoneNumber;
     }
 
 }
