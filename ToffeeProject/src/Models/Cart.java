@@ -39,6 +39,10 @@ public class Cart {
         this.Orders.remove(order);
     }
 
+    public void deleteOrders(){
+        this.Orders.clear();
+    }
+
     public int getID(){
         return this.ID;
     }

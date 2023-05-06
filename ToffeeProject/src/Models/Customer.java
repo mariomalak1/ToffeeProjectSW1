@@ -1,87 +1,49 @@
 package Models;
 import java.util.*;
-public class Customer extends Models.User {
-    private int customerID;
-    //private String phoneNumber;
+public class Customer extends User {
     private int loyaltyPoints;
-    private Cart customerCart = new Cart(customerID);
-    private int CartID;
-    private Vector<Models.Order> history;
-    private Models.Candy[] items;
+    private List<Cart> Carts;
 
-    public int getCustomerID() {
-        return customerID;
-    }
-    public Models.Candy searchItem( String itemNameOrBrand) {
-        for (int i = 0; i < items.length; i++) {
-            if (itemNameOrBrand == items[i].getName()) {
-                return items[i];
-            }
-        }
-        System.out.println("not found");
-        return null;
-    }
-    public void ViewAllItems(){
-        for (int i = 0; i< items.length;i++) {
-            System.out.println(items[i].getCategoryID());
-            System.out.println(items[i]. getPrice());
-            System.out.println(items[i]. getID());
-            System.out.println(items[i]. getUnit());
-            System.out.println(items[i]. getDescription());
-            System.out.println(items[i]. getImagePath());
-            System.out.println(items[i]. getLoyaltyPoints());
-        }
+    public Customer(){
+        loyaltyPoints = 0;
+        Carts = new ArrayList<Cart>();
     }
 
-
-
-    public void makeOrder(int candyID,int quantity,int cartID){
-        Models.Order newOrder = new Models.Order(candyID,quantity,cartID);
-        customerCart.addOrder(newOrder);
-        history.add(newOrder);
+    private void setLoyaltyPoints(int points){
+        loyaltyPoints = points;
     }
 
-
-    public void viewOrderHistory(){
-        for (int i = 0; i<history.size();i++){
-            System.out.println(history.get(i).getId());
-            System.out.println(history.get(i).getQuantity());
-            System.out.println(history.get(i).getCartID());
-        }
-
+    public int getLoyaltyPoints() {
+        return loyaltyPoints;
     }
-    private void addLoyaltyPoints(int points ){
+
+    private void addLoyaltyPoints(int points){
         loyaltyPoints += points;
     }
 
-    public void setPhoneNumber(String phoneNumber  ){
-        this.phoneNumber = phoneNumber;
+    public List<Cart> getCarts() {
+        return Carts;
     }
 
-    public char[] sendOTP(String phoneNumber ){
-        System.out.println("Generating OTP using random() : ");
-        System.out.print("You OTP is : ");
+    public void setCarts(List<Cart> carts) {
+        Carts = carts;
+    }
 
-        // Using numeric values
-        String numbers = phoneNumber;
+    public void removeCarts(){
+        Carts.clear();
+    }
 
-        // Using random method
-        Random rndm_method = new Random();
-
-        char[] otp = new char[6];
-
-        for (int i = 0; i < 6; i++)
-        {
-            // Use of charAt() method : to get character value
-            // Use of nextInt() as it is scanning the value as int
-            otp[i] =
-                    numbers.charAt(rndm_method.nextInt(numbers.length()));
+    public Cart getCart(int id){
+        for (Cart cart: Carts) {
+            if (cart.getID() == id){
+                return cart;
+            }
         }
-        return otp;
+        return null;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public void removeCart(Cart cart){
+        Carts.remove(cart);
     }
 }
 

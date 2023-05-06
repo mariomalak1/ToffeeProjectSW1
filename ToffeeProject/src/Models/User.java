@@ -48,5 +48,14 @@ public class User {
     public void removeAdmin(){
         IsAdmin = false;
     }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhoneNumber(){
+        return this.phoneNumber;
+    }
+
 }
 
