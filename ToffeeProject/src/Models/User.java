@@ -7,8 +7,11 @@ public class User {
     protected String PhoneNumber;
     protected boolean Active = false;
     protected boolean IsAdmin;
+    private static int LastID = 0;
 
     public User(String name, String email, String password, String phoneNumber, boolean admin){
+        LastID++;
+        ID = LastID;
         Name = name;
         Email = email;
         Password = password;

@@ -10,9 +10,9 @@ public class Cart {
     private int CustomerID;
     private static int LastID = 0;
 
-    public Cart(int Id, int customerId){
-        CustomerID = customerId;
+    public Cart(int customerId){
         LastID++;
+        CustomerID = customerId;
         ID = LastID;
         this.Orders = new ArrayList<>();
         this.Vouchers = new ArrayList<>();
