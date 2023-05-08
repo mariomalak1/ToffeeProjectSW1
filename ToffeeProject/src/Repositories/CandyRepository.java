@@ -10,8 +10,8 @@ import Models.Unit;
 public class CandyRepository {
     private final Connection connection;
 
-    public CandyRepository(Connection connection) {
-        this.connection = connection;
+    public CandyRepository() {
+        this.connection = DatabaseInitializer.getConnection();
     }
 
     public void addCandy(Candy candy) throws SQLException {
@@ -107,7 +107,7 @@ public class CandyRepository {
         String imagePath = resultSet.getString("ImagePath");
 
         // Assuming you have a UnitRepository to retrieve the Unit object
-        UnitRepository unitRepository = new UnitRepository(connection);
+        UnitRepository unitRepository = new UnitRepository();
         Unit unit = unitRepository.getUnitById(unitId);
 
         return new Candy(name, price, unit, categoryId, loyaltyPoints, adminIdCreatedBY, description, imagePath);

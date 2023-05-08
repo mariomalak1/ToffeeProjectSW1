@@ -6,19 +6,20 @@ import java.util.List;
 import Models.Candy;
 import Models.Unit;
 import Repositories.CandyRepository;
+import Repositories.DatabaseInitializer;
 
 public class CandyController {
     private final CandyRepository candyRepository;
     private final Connection connection;
 
-    public CandyController(Connection newConnection) {
-        candyRepository = new CandyRepository(newConnection);
-        connection = newConnection;
+    public CandyController() {
+        candyRepository = new CandyRepository();
+        connection = DatabaseInitializer.getConnection();
     }
 
     public void createCandy(String name, double price, String unitName, int categoryID, int loyaltyPoints, int adminIDCreatedBy, String description, String imagePath) {
         try {
-            UnitController unitController = new UnitController(connection);
+            UnitController unitController = new UnitController();
             Unit unit_ = unitController.createUnit(unitName);
 
             Candy candy = new Candy(name, price, unit_, categoryID, loyaltyPoints, adminIDCreatedBy, description, imagePath);
@@ -33,7 +34,7 @@ public class CandyController {
         try {
             Candy candy = candyRepository.getCandyById(candyID);
             if (candy != null) {
-                UnitController unitController = new UnitController(connection);
+                UnitController unitController = new UnitController();
                 Unit unit_ = unitController.createUnit(unitName);
 
                 candy.setName(name);

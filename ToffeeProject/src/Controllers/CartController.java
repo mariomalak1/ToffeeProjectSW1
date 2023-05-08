@@ -9,7 +9,7 @@ public class CartController {
     private final CartRepository cartRepository;
 
     public CartController(Connection connection) {
-        this.cartRepository = new CartRepository(connection);
+        this.cartRepository = new CartRepository();
     }
 
     public void createCart(int customerId) {

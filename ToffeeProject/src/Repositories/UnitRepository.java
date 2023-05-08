@@ -11,8 +11,8 @@ import Models.Unit;
 public class UnitRepository {
     private final Connection connection;
 
-    public UnitRepository(Connection connection) {
-        this.connection = connection;
+    public UnitRepository() {
+        this.connection = DatabaseInitializer.getConnection();
     }
 
     public void addUnit(Unit unit) throws SQLException {

@@ -8,8 +8,8 @@ import Models.Unit;
 public class UnitController {
     private final UnitRepository unitRepository;
 
-    public UnitController(Connection connection) {
-        this.unitRepository = new UnitRepository(connection);
+    public UnitController() {
+        this.unitRepository = new UnitRepository();
     }
 
     public Unit createUnit(String unitName) {

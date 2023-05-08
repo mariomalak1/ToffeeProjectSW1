@@ -5,14 +5,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseInitializer {
-    private static final String DB_URL = "jdbc:sqlite:your_database.db";
+    private static final String DB_PATH = "jdbc:sqlite:/D:\\FCAI-CU\\Second Year\\Second Semester\\Software\\Assignments\\Assignment 3\\ToffeeProjectSW1\\ToffeeProject\\ToffeeDataBase.db";
 
     public static void main(String[] args) {
         try {
-            Connection conn = DriverManager.getConnection(DB_URL);
+            Connection conn = DriverManager.getConnection(DB_PATH);
             createTables(conn);
             conn.close();
         } catch (SQLException e) {
+            System.out.println("Error Happen");
             e.printStackTrace();
         }
     }
@@ -77,14 +78,14 @@ public class DatabaseInitializer {
                 "Email TEXT NOT NULL," +
                 "Password TEXT NOT NULL," +
                 "PhoneNumber TEXT NOT NULL," +
-                "Active INTEGER NOT NULL," +
+                "Active INTEGER NULL," +
                 "IsAdmin INTEGER NOT NULL" +
                 ")";
         executeStatement(conn, sql);
     }
 
     private static void createOrderTable(Connection conn) throws SQLException {
-        String sql = "CREATE TABLE IF NOT EXISTS Order (" +
+        String sql = "CREATE TABLE IF NOT EXISTS Orders (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "CandyID INTEGER NOT NULL," +
                 "Quantity INTEGER NOT NULL," +
@@ -109,6 +110,20 @@ public class DatabaseInitializer {
         Statement stmt = conn.createStatement();
         stmt.execute(sql);
         stmt.close();
+    }
+
+    public static String getDataBaseBath(){
+        return DB_PATH;
+    }
+
+    public static Connection getConnection(){
+        try {
+            return DriverManager.getConnection(DB_PATH);
+        } catch (SQLException e) {
+            System.out.println("Error Happen");
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 

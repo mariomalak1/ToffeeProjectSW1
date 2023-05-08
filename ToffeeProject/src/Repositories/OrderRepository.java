@@ -11,8 +11,8 @@ import Models.Order;
 public class OrderRepository {
     private final Connection connection;
 
-    public OrderRepository(Connection connection) {
-        this.connection = connection;
+    public OrderRepository() {
+        this.connection = DatabaseInitializer.getConnection();
     }
 
     public void addOrder(Order order) throws SQLException {

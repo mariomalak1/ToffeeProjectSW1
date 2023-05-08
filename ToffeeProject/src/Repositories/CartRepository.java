@@ -11,8 +11,8 @@ import Models.Cart;
 public class CartRepository {
     private final Connection connection;
 
-    public CartRepository(Connection connection) {
-        this.connection = connection;
+    public CartRepository() {
+        this.connection = DatabaseInitializer.getConnection();
     }
 
     public void addCart(Cart cart) throws SQLException {
@@ -78,6 +78,6 @@ public class CartRepository {
     private Cart mapCart(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("ID");
         int customerID = resultSet.getInt("CustomerID");
-        return new Cart(id, customerID);
+        return new Cart(customerID);
     }
 }

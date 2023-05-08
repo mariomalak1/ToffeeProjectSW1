@@ -11,12 +11,12 @@ import Models.Customer;
 public class CustomerRepository {
     private final Connection connection;
 
-    public CustomerRepository(Connection connection) {
-        this.connection = connection;
+    public CustomerRepository() {
+        this.connection = DatabaseInitializer.getConnection();
     }
 
     public void addCustomer(Customer customer) throws SQLException {
-        String query = "INSERT INTO Customer (Name, Email, Password, PhoneNumber, Admin) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO User (Name, Email, Password, PhoneNumber, IsAdmin) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, customer.getName());
@@ -90,6 +90,6 @@ public class CustomerRepository {
         String password = resultSet.getString("Password");
         String phoneNumber = resultSet.getString("PhoneNumber");
         boolean admin = resultSet.getBoolean("Admin");
-        return new Customer(id, name, email, password, phoneNumber, admin);
+        return new Customer(name, email, password, phoneNumber, admin);
     }
 }

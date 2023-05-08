@@ -10,8 +10,8 @@ import Repositories.*;
 public class OrderController {
     private final OrderRepository orderRepository;
 
-    public OrderController(Connection connection) {
-        orderRepository = new OrderRepository(connection);
+    public OrderController() {
+        orderRepository = new OrderRepository();
     }
 
     public void addOrder(int id, int candyID, int quantity, int cartID) {
