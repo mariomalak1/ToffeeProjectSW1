@@ -1,8 +1,10 @@
 package Controllers;
 
-import java.util.List;
+import Models.User;
 import Repositories.UserRepository;
-import Models.Customer;
+import java.sql.SQLException;
+
+import java.util.List;
 
 public class UserController {
     private final UserRepository userRepository;
@@ -11,75 +13,70 @@ public class UserController {
         this.userRepository = new UserRepository();
     }
 
-    public boolean createCustomer(String name, String email, String password, String phone, boolean admin) {
+    public User createUser(String name, String email, String password, String phoneNumber, boolean admin) {
         try {
-            Customer customer = new Customer(name, email, password ,phone, admin);
-            userRepository.addCustomer(customer);
-            System.out.println("Customer created successfully. ID: " + customer.getID());
-            return true;
-        } catch (Exception e) {
-            System.out.println("Failed to create customer: " + e.getMessage());
-        }
-        return false;
-    }
-
-    public Customer getCustomerById(int customerId) {
-        try {
-            return userRepository.getCustomerById(customerId);
-        } catch (Exception e) {
-            System.out.println("Failed to retrieve customer: " + e.getMessage());
+            User user = new User(name, email, password, phoneNumber, admin);
+            userRepository.addUser(user);
+            return user;
+        } catch (SQLException e) {
+            System.out.println("Failed to create user: " + e.getMessage());
         }
         return null;
     }
 
-    public void updateCustomer(int customerId, String newName, String newEmail, String newPhone) {
+    public boolean deleteUser(int userID) {
         try {
-            Customer customer = userRepository.getCustomerById(customerId);
-            if (customer != null) {
-                customer.setName(newName);
-                customer.setEmail(newEmail);
-                customer.setPhoneNumber(newPhone);
-                userRepository.updateCustomer(customer);
-                System.out.println("Customer updated successfully.");
-            } else {
-                System.out.println("Customer not found.");
-            }
-        } catch (Exception e) {
-            System.out.println("Failed to update customer: " + e.getMessage());
+            userRepository.deleteUser(userID);
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Failed to delete user: " + e.getMessage());
         }
+        return false;
     }
 
-    public void deleteCustomer(int customerId) {
+    public User updateUser(int userID, String name, String email, String password, String phoneNumber, boolean admin) {
         try {
-            Customer customer = userRepository.getCustomerById(customerId);
-            if (customer != null) {
-                userRepository.deleteCustomer(customer);
-                System.out.println("Customer deleted successfully.");
-            } else {
-                System.out.println("Customer not found.");
-            }
-        } catch (Exception e) {
-            System.out.println("Failed to delete customer: " + e.getMessage());
-        }
-    }
-
-    public void getAllCustomers() {
-        try {
-            List<Customer> customers = userRepository.getAllCustomers();
-            if (!customers.isEmpty()) {
-                System.out.println("All Customers:");
-                for (Customer customer : customers) {
-                    System.out.println("ID: " + customer.getID());
-                    System.out.println("Name: " + customer.getName());
-                    System.out.println("Email: " + customer.getEmail());
-                    System.out.println("Phone: " + customer.getPhoneNumber());
-                    System.out.println("------------------------");
+            User user = userRepository.getUserById(userID);
+            if (user != null) {
+                user.setName(name);
+                user.setEmail(email);
+                user.setPassword(password);
+                user.setPhoneNumber(phoneNumber);
+                if (admin) {
+                    user.setAdmin();
+                } else {
+                    user.removeAdmin();
                 }
+                System.out.println("User updated successfully.");
             } else {
-                System.out.println("No customers found.");
+                System.out.println("User not found.");
             }
-        } catch (Exception e) {
-            System.out.println("Failed to get customers: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Failed to update user: " + e.getMessage());
         }
+        return null;
+    }
+
+    public void getAllUsers() {
+        try {
+            List<User> users = userRepository.getAllUsers();
+            for (User user : users) {
+                System.out.println("ID: " + user.getID() + ", Name: " + user.getName() + ", Email: " + user.getEmail() +
+                        ", Phone: " + user.getPhoneNumber() + ", Admin: " + user.isAdmin());
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to retrieve users: " + e.getMessage());
+        }
+    }
+
+    public User getUserById(int id){
+        User user = null;
+        try{
+            user = userRepository.getUserById(id);
+        }
+        catch (NullPointerException | SQLException e){
+            throw new RuntimeException(e);
+        }
+        return user;
     }
 }

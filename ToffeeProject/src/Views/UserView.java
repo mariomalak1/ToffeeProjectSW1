@@ -2,6 +2,7 @@ package Views;
 
 import java.util.Scanner;
 import Controllers.UserController;
+import Models.User;
 
 public class UserView {
 
@@ -24,7 +25,9 @@ public class UserView {
 
         UserController customerController = new UserController();
 
-        if (!customerController.createCustomer(name, email, password, phone, admin)){
+        User user = customerController.createUser(name, email, password, phone, admin);
+
+        if (user == null){
             System.out.println("Sorry For This Error");
             createUserForRegistration(admin);
         }
@@ -57,7 +60,7 @@ public class UserView {
         String password = scanner.nextLine();
 
         UserController userController = new UserController();
-        Models.User user = userController.getCustomerById(int_id);
+        Models.User user = userController.getUserById(int_id);
 
         if (user != null){
             user.setActive(true);
