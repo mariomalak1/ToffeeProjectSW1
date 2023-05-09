@@ -1,6 +1,5 @@
 package Controllers;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ public class CartController {
     public Cart createCart(int customerId) {
         try {
             Cart cart = new Cart(customerId);
-            cartRepository.addCart(cart);
+            cartRepository.createCart(cart);
             return cart;
         } catch (Exception e) {
             System.out.println("Failed to create cart: " + e.getMessage());
@@ -30,7 +29,7 @@ public class CartController {
 
     public Cart getCartById(int cartId) {
         try {
-            Cart cart = cartRepository.getCartById(cartId);
+            Cart cart = cartRepository.getCartByID(cartId);
             List<Order> orders = new OrderRepository().getOrdersByCartId(cartId);
             cart.setOrders(orders);
             if (cart != null) {
@@ -45,7 +44,7 @@ public class CartController {
 
     public void updateCartCustomerId(int cartId, int newCustomerId) {
         try {
-            Cart cart = cartRepository.getCartById(cartId);
+            Cart cart = cartRepository.getCartByID(cartId);
             if (cart != null) {
                 cart.setCustomerID(newCustomerId);
                 cartRepository.updateCart(cart);
@@ -59,7 +58,7 @@ public class CartController {
 
     public void deleteCart(int cartId) {
         try {
-            Cart cart = cartRepository.getCartById(cartId);
+            Cart cart = cartRepository.getCartByID(cartId);
             if (cart != null) {
                 cartRepository.deleteCart(cart);
                 System.out.println("Cart deleted successfully.");
@@ -73,7 +72,7 @@ public class CartController {
 
     public List<Cart> getAllCarts() {
         try {
-            List<Cart> carts = cartRepository.getAllCarts();
+            List<Cart> carts = cartRepository.getAlCarts();
             if (!carts.isEmpty()){
                 return carts;
             }
@@ -94,5 +93,17 @@ public class CartController {
             System.out.println("Error Happen Suddenly" + e.getMessage());
         }
         return cart;
+    }
+
+    public List<Cart> getAllUnFinishedCarts(){
+        try {
+            List<Cart> carts = cartRepository.getAlCarts();
+            if (!carts.isEmpty()){
+                return carts;
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to get carts: " + e.getMessage());
+        }
+        return new ArrayList<>();
     }
 }

@@ -61,7 +61,7 @@ public class CustomerController {
     public Customer getCustomerByID(int id) {
         try {
             Customer customer = customerRepository.getCustomerById(id);
-            List<Cart> allCartsForCustomer = new CartRepository().getCartsByCustomerId(customer.getID());
+            List<Cart> allCartsForCustomer = new CartRepository().getCartsByCustomerID(customer.getID());
             customer.setCarts(allCartsForCustomer);
             return customer;
         } catch (Exception e) {

@@ -17,7 +17,7 @@ public class OrderController {
         orderRepository = new OrderRepository();
     }
 
-    public Order addOrder(int id, int candyID, int quantity, int customerID) {
+    public Order addOrder(int candyID, int quantity, int customerID) {
         try {
             Customer customer = new CustomerController().getCustomerByID(customerID);
             if (customer == null){
@@ -84,4 +84,5 @@ public class OrderController {
         }
         return new ArrayList<>();
     }
+
 }

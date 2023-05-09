@@ -8,6 +8,7 @@ public class CandyView {
     // to admin and customer
 
     private static void redirectInputForListCandies(int response, Models.User user){
+        // return to main menu For Admin
         if (response == 3){
             if (user.isAdmin()){
                 UserView.ViewAdminPage(user);

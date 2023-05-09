@@ -59,7 +59,8 @@ public class DatabaseInitializer {
     private static void createCartTable(Connection conn) throws SQLException {
         String sql = "CREATE TABLE IF NOT EXISTS Cart (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "CustomerID INTEGER NOT NULL" +
+                "CustomerID INTEGER NOT NULL," +
+                "Finished Bool NOT NULL" +
                 ")";
         executeStatement(conn, sql);
     }

@@ -71,7 +71,7 @@ public class CustomerRepository {
     public List<Cart> getAllCartsForCustomer(int customerID){
         CartRepository cartRepository = new CartRepository();
         try {
-            return cartRepository.getCartsByCustomerId(customerID);
+            return cartRepository.getCartsByCustomerID(customerID);
         }catch (SQLException ig){
             return new ArrayList<>();
         }
