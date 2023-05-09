@@ -6,7 +6,7 @@ public class User {
     protected String Password;
     protected String PhoneNumber;
     protected boolean Active = false;
-    protected boolean IsAdmin = false;
+    protected boolean IsAdmin;
     private static int LastID = 0;
 
     public User(String name, String email, String password, String phoneNumber, boolean admin){
@@ -53,8 +53,8 @@ public class User {
         return IsAdmin;
     }
 
-    public void setAdmin() {
-        IsAdmin = true;
+    public void setAdmin(boolean admin) {
+        IsAdmin = admin;
     }
 
     public void removeAdmin(){

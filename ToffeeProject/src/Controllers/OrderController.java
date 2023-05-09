@@ -3,6 +3,9 @@ package Controllers;
 import Repositories.OrderRepository;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import Models.Order;
 import Models.*;
 import Repositories.*;
@@ -14,45 +17,71 @@ public class OrderController {
         orderRepository = new OrderRepository();
     }
 
-    public void addOrder(int id, int candyID, int quantity, int cartID) {
+    public Order addOrder(int id, int candyID, int quantity, int customerID) {
         try {
-            Order order = new Order(candyID, quantity, candyID);
+            Customer customer = new CustomerController().getCustomerByID(customerID);
+            if (customer == null){
+                System.out.println("There's Error Happen..");
+                return null;
+            }
+            Cart CustomerCart = customer.getCurrentCart();
+
+            Order order = new Order(candyID, quantity, CustomerCart.getID());
             orderRepository.addOrder(order);
-            System.out.println("Order added successfully.");
+
+            if (CustomerCart.isFinished()){
+                CartController cartController = new CartController();
+                CustomerCart = cartController.createCart(customerID);
+                CustomerCart.addOrder(order);
+            }else{
+                CustomerCart.addOrder(order);
+            }
+            return order;
         } catch (SQLException e) {
             System.out.println("Failed to add order: " + e.getMessage());
         }
+        return null;
     }
 
-    public void getOrderById(int orderId) {
+    public Order getOrderById(int orderId) {
         try {
             Order order = orderRepository.getOrderById(orderId);
             if (order != null) {
-                System.out.println("Order details: " + order);
-            } else {
-                System.out.println("Order not found.");
+                return order;
             }
         } catch (SQLException e) {
             System.out.println("Failed to retrieve order: " + e.getMessage());
         }
+        return null;
     }
 
-    public void updateOrder(Order order) {
+    public Order updateOrder(Order order) {
         try {
             orderRepository.updateOrder(order);
-            System.out.println("Order updated successfully.");
+            return order;
         } catch (SQLException e) {
             System.out.println("Failed to update order: " + e.getMessage());
         }
+        return null;
     }
 
-    public void deleteOrder(Order order) {
+    public boolean deleteOrder(Order order) {
         try {
             orderRepository.deleteOrder(order);
-            System.out.println("Order deleted successfully.");
+            return true;
         } catch (SQLException e) {
             System.out.println("Failed to delete order: " + e.getMessage());
         }
+        return false;
     }
 
+    public List<Order> getAllOrdersInCart(int cartId){
+        try {
+            return orderRepository.getOrdersByCartId(cartId);
+        }
+        catch(SQLException e){
+            System.out.println("Failed To Get All Orders: " + e.getMessage());
+        }
+        return new ArrayList<>();
+    }
 }

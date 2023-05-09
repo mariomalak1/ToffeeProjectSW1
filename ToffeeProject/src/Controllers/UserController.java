@@ -43,7 +43,7 @@ public class UserController {
                 user.setPassword(password);
                 user.setPhoneNumber(phoneNumber);
                 if (admin) {
-                    user.setAdmin();
+                    user.setAdmin(true);
                 } else {
                     user.removeAdmin();
                 }

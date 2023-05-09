@@ -3,8 +3,12 @@ import java.util.*;
 public class Customer extends User {
     private int loyaltyPoints;
     private List<Cart> Carts;
-    // he must be user before he become customer
 
+    public Customer(User user, int points){
+        super(user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), user.isAdmin());
+        loyaltyPoints = points;
+        Carts = new ArrayList<>();
+    }
 
     public Customer(String name, String email, String password, String phoneNumber, boolean admin) {
         super(name, email, password, phoneNumber, admin);
@@ -12,7 +16,7 @@ public class Customer extends User {
         Carts = new ArrayList<>();
     }
 
-    private void setLoyaltyPoints(int points){
+    public void setLoyaltyPoints(int points){
         loyaltyPoints = points;
     }
 
@@ -20,7 +24,7 @@ public class Customer extends User {
         return loyaltyPoints;
     }
 
-    private void addLoyaltyPoints(int points){
+    public void addLoyaltyPoints(int points){
         loyaltyPoints += points;
     }
 
@@ -30,6 +34,14 @@ public class Customer extends User {
 
     public void setCarts(List<Cart> carts) {
         Carts = carts;
+    }
+
+    public Cart getCurrentCart(){
+        return Carts.get(Carts.size() - 1);
+    }
+
+    public void addToCarts(Cart cart){
+        Carts.add(cart);
     }
 
     public void removeCarts(){

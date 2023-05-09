@@ -1,40 +1,46 @@
 package Controllers;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+
+import Models.Order;
 import Repositories.CartRepository;
 import Models.Cart;
+import Repositories.OrderRepository;
 
 public class CartController {
     private final CartRepository cartRepository;
 
-    public CartController(Connection connection) {
+    public CartController() {
         this.cartRepository = new CartRepository();
     }
 
-    public void createCart(int customerId) {
+    public Cart createCart(int customerId) {
         try {
             Cart cart = new Cart(customerId);
             cartRepository.addCart(cart);
-            System.out.println("Cart created successfully. ID: " + cart.getID());
+            return cart;
         } catch (Exception e) {
             System.out.println("Failed to create cart: " + e.getMessage());
         }
+        return null;
     }
 
-    public void getCartById(int cartId) {
+    public Cart getCartById(int cartId) {
         try {
             Cart cart = cartRepository.getCartById(cartId);
+            List<Order> orders = new OrderRepository().getOrdersByCartId(cartId);
+            cart.setOrders(orders);
             if (cart != null) {
-                System.out.println("Cart ID: " + cart.getID());
-                System.out.println("Customer ID: " + cart.getCustomerID());
+                return cart;
                 // Add more information about the cart as needed
-            } else {
-                System.out.println("Cart not found.");
             }
         } catch (Exception e) {
             System.out.println("Failed to retrieve cart: " + e.getMessage());
         }
+        return null;
     }
 
     public void updateCartCustomerId(int cartId, int newCustomerId) {
@@ -43,7 +49,6 @@ public class CartController {
             if (cart != null) {
                 cart.setCustomerID(newCustomerId);
                 cartRepository.updateCart(cart);
-                System.out.println("Cart updated successfully.");
             } else {
                 System.out.println("Cart not found.");
             }
@@ -66,22 +71,28 @@ public class CartController {
         }
     }
 
-    public void getAllCarts() {
+    public List<Cart> getAllCarts() {
         try {
             List<Cart> carts = cartRepository.getAllCarts();
-            if (!carts.isEmpty()) {
-                System.out.println("All Carts:");
-                for (Cart cart : carts) {
-                    System.out.println("Cart ID: " + cart.getID());
-                    System.out.println("Customer ID: " + cart.getCustomerID());
-                    // Add more information about the cart as needed
-                    System.out.println("------------------------");
-                }
-            } else {
-                System.out.println("No carts found.");
+            if (!carts.isEmpty()){
+                return carts;
             }
         } catch (Exception e) {
             System.out.println("Failed to get carts: " + e.getMessage());
         }
+        return new ArrayList<>();
+    }
+
+    // return the cart that not finished
+    public Cart getCurrentCart(int customerID){
+        Cart cart = null;
+        try {
+            List<Cart> allCarts = cartRepository.getUnfinishedCartsByCustomerId(customerID);
+            cart = allCarts.get(allCarts.size() - 1);
+        }
+        catch (SQLException e){
+            System.out.println("Error Happen Suddenly" + e.getMessage());
+        }
+        return cart;
     }
 }

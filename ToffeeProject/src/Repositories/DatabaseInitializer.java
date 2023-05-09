@@ -21,10 +21,10 @@ public class DatabaseInitializer {
     private static void createTables(Connection conn) throws SQLException {
         createUnitTable(conn);
         createCandyTable(conn);
-        createCartTable(conn);
         createCategoryTable(conn);
-        createAdminUserTable(conn);
+        createUserTable(conn);
         createCustomerTable(conn);
+        createCartTable(conn);
         createOrderTable(conn);
         createVoucherTable(conn);
     }
@@ -72,21 +72,12 @@ public class DatabaseInitializer {
         executeStatement(conn, sql);
     }
 
-    private static void createAdminUserTable(Connection conn) throws SQLException {
-        String sql = "CREATE TABLE IF NOT EXISTS AdminUser (" +
-                "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "Name TEXT NOT NULL," +
-                "Email TEXT NOT NULL," +
-                "Password TEXT NOT NULL," +
-                "PhoneNumber TEXT NOT NULL," +
-                "Active INTEGER NULL," +
-                "IsAdmin INTEGER NULL" +
+    private static void createCustomerTable(Connection conn) throws SQLException{
+        String sql = "CREATE TABLE IF NOT EXISTS Customer (" +
+                "UserID INTEGER NOT NULL," +
+                "LoyaltyPoints INTEGER NULL" +
                 ")";
         executeStatement(conn, sql);
-    }
-
-    private static void createCustomerTable(Connection conn) throws SQLException{
-
     }
 
     private static void createUserTable(Connection conn) throws SQLException {
@@ -128,10 +119,6 @@ public class DatabaseInitializer {
         Statement stmt = conn.createStatement();
         stmt.execute(sql);
         stmt.close();
-    }
-
-    public static String getDataBaseBath(){
-        return DB_PATH;
     }
 
     public static Connection getConnection(){

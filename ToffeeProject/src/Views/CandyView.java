@@ -39,27 +39,25 @@ public class CandyView {
 
     public static void listAllCandies(Models.User user){
         Scanner scanner = new Scanner(System.in);
-
-        if (user.isAdmin()){
-            System.out.println("1- Add New Candy");
-            System.out.println("2- Delete Specific Candy With ID");
-            System.out.println("3- Main Page");
-        }else{
-            System.out.println("1- Create an Order");
-            System.out.println("2- Main Page");
-        }
-
-
-        CandyController candyController = new CandyController();
-        candyController.getAllCandies();
-
-        String stringResponse = scanner.nextLine();
-        try{
-            int response = Integer.parseInt(stringResponse);
-            redirectInputForListCandies(response, user);
-        }
-        catch (NullPointerException ignore){
-            System.out.println("Please Enter Valid Response");
+        while (true) {
+            if (user.isAdmin()) {
+                System.out.println("1- Add New Candy");
+                System.out.println("2- Delete Specific Candy With ID");
+                System.out.println("3- Main Page");
+            } else {
+                System.out.println("1- Create an Order");
+                System.out.println("2- Main Page");
+            }
+            CandyController candyController = new CandyController();
+            candyController.getAllCandies();
+            String stringResponse = scanner.nextLine();
+            try{
+                int response = Integer.parseInt(stringResponse);
+                redirectInputForListCandies(response, user);
+            }
+            catch (NullPointerException ignore){
+                System.out.println("Please Enter Valid Response");
+            }
         }
     }
 

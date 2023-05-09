@@ -36,7 +36,6 @@ public class CartRepository {
                 cart = mapCart(resultSet);
             }
         }
-
         return cart;
     }
 
@@ -73,6 +72,53 @@ public class CartRepository {
             statement.setInt(1, cart.getID());
             statement.executeUpdate();
         }
+    }
+
+    public List<Cart> getCartsByCustomerId(int customerID) throws SQLException {
+        List<Cart> carts = new ArrayList<>();
+        String sql = "SELECT * FROM Cart WHERE CustomerID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, customerID);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int cartID = resultSet.getInt("ID");
+                    boolean finished = resultSet.getBoolean("Finished");
+
+                    Cart cart = new Cart(customerID);
+                    cart.setID(cartID);
+                    cart.setFinished(finished);
+
+                    carts.add(cart);
+                }
+            }
+        }
+
+        return carts;
+    }
+
+    public List<Cart> getUnfinishedCartsByCustomerId(int customerID) throws SQLException {
+        List<Cart> unfinishedCarts = new ArrayList<>();
+        String sql = "SELECT * FROM Cart WHERE CustomerID = ? AND Finished = 0";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, customerID);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int cartID = resultSet.getInt("ID");
+
+                    Cart cart = new Cart(customerID);
+                    cart.setID(cartID);
+                    cart.setFinished(false);
+
+                    unfinishedCarts.add(cart);
+                }
+            }
+        }
+
+        return unfinishedCarts;
     }
 
     private Cart mapCart(ResultSet resultSet) throws SQLException {

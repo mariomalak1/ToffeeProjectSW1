@@ -8,6 +8,7 @@ public class Cart {
     private List<Order> Orders;
     private List<Voucher> Vouchers;
     private int CustomerID;
+    private boolean Finished;
     private static int LastID = 0;
 
     public Cart(int customerId){
@@ -16,6 +17,7 @@ public class Cart {
         ID = LastID;
         this.Orders = new ArrayList<>();
         this.Vouchers = new ArrayList<>();
+        Finished = false;
     }
 
     public void addOrder(Order order){
@@ -24,6 +26,10 @@ public class Cart {
 
     public List<Order> getOrders(){
         return this.Orders;
+    }
+
+    public void setOrders(List<Order>orders){
+        Orders = orders;
     }
 
     public Order getOrder(int orderId){
@@ -82,5 +88,13 @@ public class Cart {
 
     public void setID(int id){
         ID = id;
+    }
+
+    public boolean isFinished() {
+        return Finished;
+    }
+
+    public void setFinished(boolean finished){
+        Finished = finished;
     }
 }

@@ -3,8 +3,6 @@ package Repositories;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import Models.Customer;
 import Models.User;
 
 public class UserRepository {
@@ -56,16 +54,16 @@ public class UserRepository {
         return user;
     }
 
-    public void updateUser(Customer customer) throws SQLException {
+    public void updateUser(User user) throws SQLException {
         String query = "UPDATE User SET Name = ?, Email = ?, Password = ?, PhoneNumber = ?, Admin = ? WHERE ID = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, customer.getName());
-            statement.setString(2, customer.getEmail());
-            statement.setString(3, customer.getPassword());
-            statement.setString(4, customer.getPhoneNumber());
-            statement.setBoolean(5, customer.isAdmin());
-            statement.setInt(6, customer.getID());
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, user.getPhoneNumber());
+            statement.setBoolean(5, user.isAdmin());
+            statement.setInt(6, user.getID());
             statement.executeUpdate();
         }
     }
