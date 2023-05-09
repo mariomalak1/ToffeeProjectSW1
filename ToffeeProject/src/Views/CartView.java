@@ -16,7 +16,7 @@ public class CartView {
         if (customer == null){
             System.out.println("Error Happen");
         }else{
-            Cart currentCart = customer.getCurrentCart();
+            Cart currentCart = new CartController().getCurrentCart(customer.getID());
             if (currentCart == null){
                 System.out.println("Error Happen");
             }else{
@@ -73,7 +73,10 @@ public class CartView {
         if (customer == null){
             System.out.println("Error Happen Suddenly");
         }else{
-            customer.getCurrentCart().setFinished(true);
+            CartController cartController = new CartController();
+            Cart cart = cartController.getCurrentCart(customer.getID());
+            cart.setFinished(true);
+            cartController.updateCartCustomerId(cart.getID(), customer.getID());
         }
     }
 

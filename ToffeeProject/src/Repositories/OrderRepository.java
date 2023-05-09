@@ -16,7 +16,7 @@ public class OrderRepository {
     }
 
     public void addOrder(Order order) throws SQLException {
-        String query = "INSERT INTO Order (CandyID, Quantity, CartID) VALUES (?, ?, ?)";
+        String query = "INSERT INTO Orders (CandyID, Quantity, CartID) VALUES (?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, order.getCandyId());
@@ -27,7 +27,7 @@ public class OrderRepository {
     }
 
     public Order getOrderById(int id) throws SQLException {
-        String query = "SELECT * FROM Order WHERE ID = ?";
+        String query = "SELECT * FROM Orders WHERE ID = ?";
         Order order = null;
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -43,7 +43,7 @@ public class OrderRepository {
     }
 
     public List<Order> getOrdersByCartId(int cartId) throws SQLException {
-        String query = "SELECT * FROM Order WHERE CartID = ?";
+        String query = "SELECT * FROM Orders WHERE CartID = ?";
         List<Order> orders = new ArrayList<>();
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -60,7 +60,7 @@ public class OrderRepository {
     }
 
     public void updateOrder(Order order) throws SQLException {
-        String query = "UPDATE Order SET CandyID = ?, Quantity = ?, CartID = ? WHERE ID = ?";
+        String query = "UPDATE Orders SET CandyID = ?, Quantity = ?, CartID = ? WHERE ID = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, order.getCandyId());
@@ -72,7 +72,7 @@ public class OrderRepository {
     }
 
     public void deleteOrder(Order order) throws SQLException {
-        String query = "DELETE FROM Order WHERE ID = ?";
+        String query = "DELETE FROM Orders WHERE ID = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, order.getId());

@@ -87,7 +87,11 @@ public class CartController {
         Cart cart = null;
         try {
             List<Cart> allCarts = cartRepository.getUnfinishedCartsByCustomerId(customerID);
-            cart = allCarts.get(allCarts.size() - 1);
+            if (allCarts.isEmpty()){
+                cart = createCart(customerID);
+            }else {
+                cart = allCarts.get(allCarts.size() - 1);
+            }
         }
         catch (SQLException e){
             System.out.println("Error Happen Suddenly" + e.getMessage());

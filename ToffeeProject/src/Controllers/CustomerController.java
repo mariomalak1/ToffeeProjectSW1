@@ -94,6 +94,6 @@ public class CustomerController {
 
     public Models.Cart getCurrentCartForCustomer(int customerID){
         Customer customer = getCustomerByID(customerID);
-        return customer.getCurrentCart();
+        return new CartController().getCurrentCart(customer.getID());
     }
 }

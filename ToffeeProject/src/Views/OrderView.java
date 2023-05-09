@@ -4,10 +4,7 @@ import Controllers.CandyController;
 import Controllers.CartController;
 import Controllers.CustomerController;
 import Controllers.OrderController;
-import Models.Cart;
 import Models.Customer;
-
-import java.util.List;
 import java.util.Scanner;
 
 public class OrderView {
@@ -48,11 +45,14 @@ public class OrderView {
         Customer customer = new CustomerController().getCustomerByID(user.getID());
         if (customer != null) {
             OrderController orderController = new OrderController();
-            orderController.addOrder(candyID, quantity, customer.getID());
+            Models.Order order = orderController.addOrder(candyID, quantity, customer.getID());
+            Models.Cart cart =  new CartController().getCartById(order.getCartID());
+
+            cart.addOrder(order);
+            System.out.println("Order Created Successfully");
         }
         else{
             System.out.println("Sorry You Don't Login Yet, PLease Try Again");
-            MainView.runApplication();
         }
     }
 }

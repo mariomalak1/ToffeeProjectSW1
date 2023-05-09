@@ -34,7 +34,7 @@ public class UserController {
         return false;
     }
 
-    public User updateUser(int userID, String name, String email, String password, String phoneNumber, boolean admin) {
+    public User updateUser(int userID, String name, String email, String password, String phoneNumber, boolean admin, boolean active) {
         try {
             User user = userRepository.getUserById(userID);
             if (user != null) {
@@ -42,12 +42,13 @@ public class UserController {
                 user.setEmail(email);
                 user.setPassword(password);
                 user.setPhoneNumber(phoneNumber);
+                user.setActive(active);
                 if (admin) {
                     user.setAdmin(true);
                 } else {
                     user.removeAdmin();
                 }
-                System.out.println("User updated successfully.");
+                return user;
             } else {
                 System.out.println("User not found.");
             }

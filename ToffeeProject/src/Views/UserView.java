@@ -79,6 +79,7 @@ public class UserView {
             if (user.getPassword().equals(password)){
                 user.setActive(true);
                 System.out.println(user.getName() +" You Login Successfully");
+                user = new UserController().updateUser(user.getID(), user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), user.isAdmin(), user.isActive());
                 if (user.isAdmin()){
                     ViewAdminPage(user);
                 }else{
@@ -95,6 +96,7 @@ public class UserView {
 
     public static void Logout(Models.User user){
         user.setActive(false);
+        new UserController().updateUser(user.getID(), user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), user.isAdmin(), user.isActive());
         System.out.println("You Logout");
         MainView.runApplication();
     }

@@ -36,10 +36,6 @@ public class Customer extends User {
         Carts = carts;
     }
 
-    public Cart getCurrentCart(){
-        return Carts.get(Carts.size() - 1);
-    }
-
     public void addToCarts(Cart cart){
         Carts.add(cart);
     }

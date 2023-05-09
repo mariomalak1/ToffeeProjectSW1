@@ -24,18 +24,22 @@ public class OrderController {
                 System.out.println("There's Error Happen..");
                 return null;
             }
-            Cart CustomerCart = customer.getCurrentCart();
+
+            Cart CustomerCart = new CartController().getCurrentCart(customerID);
 
             Order order = new Order(candyID, quantity, CustomerCart.getID());
-            orderRepository.addOrder(order);
 
             if (CustomerCart.isFinished()){
                 CartController cartController = new CartController();
                 CustomerCart = cartController.createCart(customerID);
+                order.setCartID(CustomerCart.getID());
                 CustomerCart.addOrder(order);
             }else{
                 CustomerCart.addOrder(order);
             }
+
+            orderRepository.addOrder(order);
+
             return order;
         } catch (SQLException e) {
             System.out.println("Failed to add order: " + e.getMessage());
