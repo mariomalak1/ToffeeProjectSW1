@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import Models.Customer;
 
-public class CustomerRepository {
+public class UserRepository {
     private final Connection connection;
 
-    public CustomerRepository() {
+    public UserRepository() {
         this.connection = DatabaseInitializer.getConnection();
     }
 

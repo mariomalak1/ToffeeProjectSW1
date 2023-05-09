@@ -1,7 +1,4 @@
 package Models;
-
-import java.util.TreeMap;
-
 public class User {
     protected int ID;
     protected String Name;
@@ -9,7 +6,7 @@ public class User {
     protected String Password;
     protected String PhoneNumber;
     protected boolean Active = false;
-    protected boolean IsAdmin;
+    protected boolean IsAdmin = false;
     private static int LastID = 0;
 
     public User(String name, String email, String password, String phoneNumber, boolean admin){

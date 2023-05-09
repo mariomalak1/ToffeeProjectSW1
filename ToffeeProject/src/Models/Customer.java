@@ -3,6 +3,8 @@ import java.util.*;
 public class Customer extends User {
     private int loyaltyPoints;
     private List<Cart> Carts;
+    // he must be user before he become customer
+    private int userID;
 
     public Customer(String name, String email, String password, String phoneNumber, boolean admin) {
         super(name, email, password, phoneNumber, admin);

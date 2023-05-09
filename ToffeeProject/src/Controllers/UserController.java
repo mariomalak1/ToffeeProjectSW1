@@ -1,20 +1,20 @@
 package Controllers;
 
 import java.util.List;
-import Repositories.CustomerRepository;
+import Repositories.UserRepository;
 import Models.Customer;
 
 public class UserController {
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
 
     public UserController() {
-        this.customerRepository = new CustomerRepository();
+        this.userRepository = new UserRepository();
     }
 
     public boolean createCustomer(String name, String email, String password, String phone, boolean admin) {
         try {
             Customer customer = new Customer(name, email, password ,phone, admin);
-            customerRepository.addCustomer(customer);
+            userRepository.addCustomer(customer);
             System.out.println("Customer created successfully. ID: " + customer.getID());
             return true;
         } catch (Exception e) {
@@ -25,7 +25,7 @@ public class UserController {
 
     public Customer getCustomerById(int customerId) {
         try {
-            return customerRepository.getCustomerById(customerId);
+            return userRepository.getCustomerById(customerId);
         } catch (Exception e) {
             System.out.println("Failed to retrieve customer: " + e.getMessage());
         }
@@ -34,12 +34,12 @@ public class UserController {
 
     public void updateCustomer(int customerId, String newName, String newEmail, String newPhone) {
         try {
-            Customer customer = customerRepository.getCustomerById(customerId);
+            Customer customer = userRepository.getCustomerById(customerId);
             if (customer != null) {
                 customer.setName(newName);
                 customer.setEmail(newEmail);
                 customer.setPhoneNumber(newPhone);
-                customerRepository.updateCustomer(customer);
+                userRepository.updateCustomer(customer);
                 System.out.println("Customer updated successfully.");
             } else {
                 System.out.println("Customer not found.");
@@ -51,9 +51,9 @@ public class UserController {
 
     public void deleteCustomer(int customerId) {
         try {
-            Customer customer = customerRepository.getCustomerById(customerId);
+            Customer customer = userRepository.getCustomerById(customerId);
             if (customer != null) {
-                customerRepository.deleteCustomer(customer);
+                userRepository.deleteCustomer(customer);
                 System.out.println("Customer deleted successfully.");
             } else {
                 System.out.println("Customer not found.");
@@ -65,7 +65,7 @@ public class UserController {
 
     public void getAllCustomers() {
         try {
-            List<Customer> customers = customerRepository.getAllCustomers();
+            List<Customer> customers = userRepository.getAllCustomers();
             if (!customers.isEmpty()) {
                 System.out.println("All Customers:");
                 for (Customer customer : customers) {

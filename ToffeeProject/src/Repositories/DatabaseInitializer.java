@@ -23,7 +23,8 @@ public class DatabaseInitializer {
         createCandyTable(conn);
         createCartTable(conn);
         createCategoryTable(conn);
-        createUserTable(conn);
+        createAdminUserTable(conn);
+        createCustomerTable(conn);
         createOrderTable(conn);
         createVoucherTable(conn);
     }
@@ -69,6 +70,23 @@ public class DatabaseInitializer {
                 "Name TEXT NOT NULL" +
                 ")";
         executeStatement(conn, sql);
+    }
+
+    private static void createAdminUserTable(Connection conn) throws SQLException {
+        String sql = "CREATE TABLE IF NOT EXISTS AdminUser (" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Name TEXT NOT NULL," +
+                "Email TEXT NOT NULL," +
+                "Password TEXT NOT NULL," +
+                "PhoneNumber TEXT NOT NULL," +
+                "Active INTEGER NULL," +
+                "IsAdmin INTEGER NULL" +
+                ")";
+        executeStatement(conn, sql);
+    }
+
+    private static void createCustomerTable(Connection conn) throws SQLException{
+
     }
 
     private static void createUserTable(Connection conn) throws SQLException {
