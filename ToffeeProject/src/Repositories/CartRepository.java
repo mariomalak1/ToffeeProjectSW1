@@ -6,7 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import Controllers.OrderController;
 import Models.Cart;
+import Models.Order;
 
 
 public class CartRepository {
@@ -17,15 +20,27 @@ public class CartRepository {
         this.conn = DatabaseInitializer.getConnection();
     }
 
-    public void createCart(Cart cart) throws SQLException {
+    public Cart createCart(Cart cart) throws SQLException {
         String sql = "INSERT INTO " + TABLE_NAME + " (CustomerID, Finished) VALUES (?, ?)";
 
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setInt(1, cart.getCustomerID());
             statement.setBoolean(2, cart.isFinished());
 
-            statement.executeUpdate();
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("Adding user failed, no rows affected.");
+            }
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int generatedID = generatedKeys.getInt(1);
+                    cart.setID(generatedID);
+                } else {
+                    throw new SQLException("Adding Cart failed, no ID obtained.");
+                }
+            }
         }
+        return cart;
     }
 
     public List<Cart> getCartsByCustomerID(int customerID) throws SQLException {
@@ -105,6 +120,8 @@ public class CartRepository {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     cart = mapCart(resultSet);
+                    List<Order> ordersOfCart = new OrderController().getAllOrdersInCart(cart.getID());
+                    cart.setOrders(ordersOfCart);
                 }
             }
         }

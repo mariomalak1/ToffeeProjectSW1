@@ -91,9 +91,4 @@ public class CustomerController {
             return null;
         }
     }
-
-    public Models.Cart getCurrentCartForCustomer(int customerID){
-        Customer customer = getCustomerByID(customerID);
-        return new CartController().getCurrentCart(customer.getID());
-    }
 }

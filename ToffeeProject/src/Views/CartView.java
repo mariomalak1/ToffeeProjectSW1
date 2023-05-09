@@ -44,31 +44,27 @@ public class CartView {
     }
 
     private static void checkOutResponse(Models.User user){
-        while (true) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("1- To Confirm Order Page");
-            System.out.println("2- Main Menu");
-            System.out.println("This All Orders You Order Them : ");
-            String stringResponse = scanner.nextLine();
-            if (MainView.isNumeric(stringResponse)) {
-                checkOutResponse(user);
-            } else {
-                System.out.println("Please Enter Valid Response, Try Again");
-            }
-            if (stringResponse.equals("2")) {
-                UserView.ViewCustomerPage(user);
-                break;
-            } else if (stringResponse.equals("1")) {
-                ConfirmOrder(user);
-                break;
-            } else {
-                System.out.println("Enter Valid Response");
-            }
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("1- To Confirm Order Page");
+        System.out.println("2- Main Menu");
+        System.out.println("This All Orders You Order Them : ");
+        String stringResponse = scanner.nextLine();
+        if (!MainView.isNumeric(stringResponse)) {
+            System.out.println("Please Enter Valid Response");
+            checkOutResponse(user);
+        } else {
+            System.out.println("Please Enter Valid Response, Try Again");
+        }
+        if (stringResponse.equals("2")) {
+            UserView.ViewCustomerPage(user);
+        } else if (stringResponse.equals("1")) {
+            ConfirmOrder(user);
+        } else {
+            System.out.println("Enter Valid Response");
         }
     }
 
     public static void ConfirmOrder(Models.User user){
-        System.out.println("Order Confirmed Successfully");
         Customer customer = new CustomerController().getCustomerByID(user.getID());
         if (customer == null){
             System.out.println("Error Happen Suddenly");
@@ -76,7 +72,8 @@ public class CartView {
             CartController cartController = new CartController();
             Cart cart = cartController.getCurrentCart(customer.getID());
             cart.setFinished(true);
-            cartController.updateCartCustomerId(cart.getID(), customer.getID());
+            cartController.updateCartCustomerId(cart, customer);
+            System.out.println("Order Confirmed Successfully");
         }
     }
 

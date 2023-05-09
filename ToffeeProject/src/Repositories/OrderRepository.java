@@ -15,15 +15,29 @@ public class OrderRepository {
         this.connection = DatabaseInitializer.getConnection();
     }
 
-    public void addOrder(Order order) throws SQLException {
+    public Order addOrder(Order order) throws SQLException {
         String query = "INSERT INTO Orders (CandyID, Quantity, CartID) VALUES (?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, order.getCandyId());
             statement.setInt(2, order.getQuantity());
             statement.setInt(3, order.getCartID());
-            statement.executeUpdate();
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected == 0) {
+                throw new SQLException("Adding user failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int generatedID = generatedKeys.getInt(1);
+                    order.setID(generatedID);
+                } else {
+                    throw new SQLException("Adding user failed, no ID obtained.");
+                }
+            }
         }
+        return order;
     }
 
     public Order getOrderById(int id) throws SQLException {

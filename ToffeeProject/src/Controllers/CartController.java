@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Models.Customer;
 import Models.Order;
 import Repositories.CartRepository;
 import Models.Cart;
@@ -19,7 +20,7 @@ public class CartController {
     public Cart createCart(int customerId) {
         try {
             Cart cart = new Cart(customerId);
-            cartRepository.createCart(cart);
+            cart = cartRepository.createCart(cart);
             return cart;
         } catch (Exception e) {
             System.out.println("Failed to create cart: " + e.getMessage());
@@ -30,9 +31,9 @@ public class CartController {
     public Cart getCartById(int cartId) {
         try {
             Cart cart = cartRepository.getCartByID(cartId);
-            List<Order> orders = new OrderRepository().getOrdersByCartId(cartId);
-            cart.setOrders(orders);
             if (cart != null) {
+                List<Order> orders = new OrderRepository().getOrdersByCartId(cartId);
+                cart.setOrders(orders);
                 return cart;
                 // Add more information about the cart as needed
             }
@@ -42,11 +43,10 @@ public class CartController {
         return null;
     }
 
-    public void updateCartCustomerId(int cartId, int newCustomerId) {
+    public void updateCartCustomerId(Cart cart, Customer customer) {
         try {
-            Cart cart = cartRepository.getCartByID(cartId);
             if (cart != null) {
-                cart.setCustomerID(newCustomerId);
+                cart.setCustomerID(customer.getID());
                 cartRepository.updateCart(cart);
             } else {
                 System.out.println("Cart not found.");
@@ -91,7 +91,10 @@ public class CartController {
                 cart = createCart(customerID);
             }else {
                 cart = allCarts.get(allCarts.size() - 1);
+                List<Order> ordersOfCart = new OrderController().getAllOrdersInCart(cart.getID());
+                cart.setOrders(ordersOfCart);
             }
+            return cart;
         }
         catch (SQLException e){
             System.out.println("Error Happen Suddenly" + e.getMessage());
