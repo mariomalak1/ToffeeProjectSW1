@@ -1,37 +1,34 @@
 package Views;
 import Controllers.CandyController;
-import Controllers.UnitController;
-import Controllers.UserController;
 import Models.Candy;
-import Models.Unit;
 
 import java.util.Scanner;
 
 public class CandyView {
     // to admin and customer
 
-    private static void redirectInputForListCandies(int response, boolean adminUser){
+    private static void redirectInputForListCandies(int response, Models.User user){
         if (response == 3){
-            if (adminUser){
-                UserView.ViewAdminPage();
+            if (user.isAdmin()){
+                UserView.ViewAdminPage(user);
             }else{
                 System.out.println("Enter Valid Response");
             }
         }
 
         else if(response == 1){
-            if (adminUser){
-                createNewCandy();
+            if (user.isAdmin()){
+                createNewCandy(user);
             }else {
-                OrderView.createOrder();
+                OrderView.createOrder(user);
             }
         }
 
         else if (response == 2){
-            if (adminUser){
-                deleteCandy();
+            if (user.isAdmin()){
+                deleteCandy(user);
             }else{
-                UserView.ViewCustomerPage();
+                UserView.ViewCustomerPage(user);
             }
         }
 
@@ -40,10 +37,10 @@ public class CandyView {
         }
     }
 
-    public static void listAllCandies(boolean adminUser){
+    public static void listAllCandies(Models.User user){
         Scanner scanner = new Scanner(System.in);
 
-        if (adminUser){
+        if (user.isAdmin()){
             System.out.println("1- Add New Candy");
             System.out.println("2- Delete Specific Candy With ID");
             System.out.println("3- Main Page");
@@ -59,7 +56,7 @@ public class CandyView {
         String stringResponse = scanner.nextLine();
         try{
             int response = Integer.parseInt(stringResponse);
-            redirectInputForListCandies(response, adminUser);
+            redirectInputForListCandies(response, user);
         }
         catch (NullPointerException ignore){
             System.out.println("Please Enter Valid Response");
@@ -67,7 +64,7 @@ public class CandyView {
     }
 
     // Admin Views
-    public static void createNewCandy(){
+    public static void createNewCandy(Models.User user){
         CandyController candyController = new CandyController();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome in Create New Candy page");
@@ -88,7 +85,7 @@ public class CandyView {
         }
     }
 
-    public static void deleteCandy(){
+    public static void deleteCandy(Models.User user){
         CandyController candyController = new CandyController();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome in Create New Candy page");

@@ -2,8 +2,6 @@ package Views;
 
 import java.util.Scanner;
 import Controllers.UserController;
-import Models.Candy;
-
 
 public class UserView {
 
@@ -32,15 +30,15 @@ public class UserView {
         }
     }
 
-    public static void registrationForAdmin(){
-        createUserForRegistration(true);
+    public static void registrationForAdmin(Models.User user){
+        createUserForRegistration(user.isAdmin());
     }
 
     public static void registrationForCustomer(){
         createUserForRegistration(false);
     }
 
-    public static void Login(){
+    public static Models.User Login(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome in Login Page");
 
@@ -62,12 +60,13 @@ public class UserView {
         Models.User user = userController.getCustomerById(int_id);
 
         if (user != null){
+            user.setActive(true);
             if (user.getPassword().equals(password)){
                 System.out.println(user.getName() +" You Login Successfully");
                 if (user.isAdmin()){
-                    ViewAdminPage();
+                    ViewAdminPage(user);
                 }else{
-                    ViewCustomerPage();
+                    ViewCustomerPage(user);
                 }
             }else{
                 System.out.println("You Enter Incorrect Password, Try Again");
@@ -75,15 +74,17 @@ public class UserView {
         }else{
             System.out.println("You Are Not In The System Or You Enter A non Valid ID");
         }
+        return null;
     }
 
-    public static void Logout(){
+    public static void Logout(Models.User user){
+        user.setActive(false);
         System.out.println("You Logout");
         MainView.runApplication();
     }
 
     // Customer Page
-    public static void ViewCustomerPage(){
+    public static void ViewCustomerPage(Models.User user){
         int response;
         while (true) {
             System.out.println("1- All Candies");
@@ -94,22 +95,22 @@ public class UserView {
             String stringResponse = sc.nextLine();
             if (MainView.isNumeric(stringResponse)) {
                 response = Integer.parseInt(stringResponse);
-                CustomerRedirectInput(response);
+                CustomerRedirectInput(response, user);
             } else {
                 System.out.println("Please enter valid Response");
             }
         }
     }
 
-    private static void CustomerRedirectInput(int response){
+    private static void CustomerRedirectInput(int response, Models.User user){
         if (response == 3){
-            Logout();
+            Logout(user);
         }
         else if (response == 1){
-            CandyView.listAllCandies(false);
+            CandyView.listAllCandies(user);
         }
         else if (response == 2){
-            CartView.checkOut();
+            CartView.checkOut(user);
         }
         else{
             System.out.println("Enter Valid Response");
@@ -117,7 +118,7 @@ public class UserView {
     }
 
     // Admin Page
-    public static void ViewAdminPage(){
+    public static void ViewAdminPage(Models.User user){
         int response;
         System.out.println("Welcome Admin Page");
         while (true) {
@@ -130,25 +131,25 @@ public class UserView {
             String stringResponse = sc.nextLine();
             if (MainView.isNumeric(stringResponse)) {
                 response = Integer.parseInt(stringResponse);
-                AdminRedirectInput(response);
+                AdminRedirectInput(response, user);
             } else {
                 System.out.println("Please enter valid Response");
             }
         }
     }
 
-    private static void AdminRedirectInput(int response){
+    private static void AdminRedirectInput(int response, Models.User user){
         if (response == 4){
-            Logout();
+            Logout(user);
         }
         else if(response == 1){
-            UserView.registrationForAdmin();
+            UserView.registrationForAdmin(user);
         }
         else if (response == 2){
-            CandyView.listAllCandies(true);
+            CandyView.listAllCandies(user);
         }
         else if (response == 3){
-            CartView.allCarts();
+            CartView.allCarts(user);
         }
         else{
             System.out.println("Enter Valid Response");

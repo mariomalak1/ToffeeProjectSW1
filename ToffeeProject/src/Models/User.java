@@ -80,8 +80,8 @@ public class User {
         ID = id;
     }
 
-    public void makeActive(){
-        Active = true;
+    public void setActive(boolean active){
+        Active = active;
     }
 }
 
