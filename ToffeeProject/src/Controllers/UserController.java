@@ -1,17 +1,13 @@
 package Controllers;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.List;
 import Repositories.CustomerRepository;
-import Repositories.DatabaseInitializer;
 import Models.Customer;
 
-public class CustomerController {
+public class UserController {
     private final CustomerRepository customerRepository;
 
-    public CustomerController() {
+    public UserController() {
         this.customerRepository = new CustomerRepository();
     }
 
@@ -27,20 +23,13 @@ public class CustomerController {
         return false;
     }
 
-    public void getCustomerById(int customerId) {
+    public Customer getCustomerById(int customerId) {
         try {
-            Customer customer = customerRepository.getCustomerById(customerId);
-            if (customer != null) {
-                System.out.println("Customer ID: " + customer.getID());
-                System.out.println("Name: " + customer.getName());
-                System.out.println("Email: " + customer.getEmail());
-                System.out.println("Phone: " + customer.getPhoneNumber());
-            } else {
-                System.out.println("Customer not found.");
-            }
+            return customerRepository.getCustomerById(customerId);
         } catch (Exception e) {
             System.out.println("Failed to retrieve customer: " + e.getMessage());
         }
+        return null;
     }
 
     public void updateCustomer(int customerId, String newName, String newEmail, String newPhone) {

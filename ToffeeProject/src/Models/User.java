@@ -1,4 +1,7 @@
 package Models;
+
+import java.util.TreeMap;
+
 public class User {
     protected int ID;
     protected String Name;
@@ -71,6 +74,10 @@ public class User {
 
     public int getID() {
         return ID;
+    }
+
+    public void makeActive(){
+        Active = true;
     }
 }
 

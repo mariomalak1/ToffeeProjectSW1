@@ -1,7 +1,6 @@
 package Views;
 
 import java.util.Scanner;
-import Repositories.DatabaseInitializer;
 public class MainView {
 
     public static boolean isNumeric(String str) {
@@ -14,13 +13,15 @@ public class MainView {
     }
 
     private static void redirectInput(int response){
-        if (response == 5){
+        if (response == 3){
             System.exit(0);
         }
         else if(response == 1){
             User.registrationForCustomer();
         }
-
+        else if (response == 2){
+            User.Login();
+        }
         else{
             System.out.println("Enter Valid Response");
         }
@@ -28,13 +29,11 @@ public class MainView {
 
     public static void runApplication(){
         int response;
+        System.out.println("Hello in Toffee Project");
         while (true) {
-            System.out.println("Hello in Toffee Project");
             System.out.println("1- Registration");
             System.out.println("2- Login");
-            System.out.println("3- Display all Products");
-            System.out.println("4- Checkout");
-            System.out.println("5- Exit");
+            System.out.println("3- Exit");
             System.out.println("What's Your Response : ");
             Scanner sc = new Scanner(System.in);
             String stringResponse = sc.nextLine();
