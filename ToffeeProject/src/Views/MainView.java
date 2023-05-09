@@ -31,9 +31,11 @@ public class MainView {
         int response;
         System.out.println("Hello in Toffee Project");
         while (true) {
+            System.out.println("--------------------");
             System.out.println("1- Registration");
             System.out.println("2- Login");
             System.out.println("3- Exit");
+            System.out.println("--------------------");
             System.out.println("What's Your Response : ");
             Scanner sc = new Scanner(System.in);
             String stringResponse = sc.nextLine();

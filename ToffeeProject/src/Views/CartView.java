@@ -20,12 +20,14 @@ public class CartView {
             if (currentCart == null){
                 System.out.println("Error Happen");
             }else{
+                System.out.println("--------------------------");
                 System.out.println("Welcome In Check Out Page");
                 // if the cart is finished, he must create new order to make new cart
                 if (currentCart.getOrders().isEmpty() || currentCart.isFinished()){
                     System.out.println("No Orders Create Yet, Create Order First");
                 }
                 else {
+                    System.out.println("--------------------------");
                     System.out.println("This Your Orders Created : ");
                     for (Models.Order order : currentCart.getOrders()) {
                         Models.Candy candy = new CandyController().getCandyDetails(order.getCandyId());
@@ -38,6 +40,7 @@ public class CartView {
                     }
                     System.out.println("Total Cost : " + currentCart.getTotalCostOfCart());
                     checkOutResponse(user);
+                    System.out.println("--------------------------");
                 }
             }
         }
@@ -45,9 +48,11 @@ public class CartView {
 
     private static void checkOutResponse(Models.User user){
         Scanner scanner = new Scanner(System.in);
+        System.out.println("--------------------------");
         System.out.println("1- To Confirm Order Page");
         System.out.println("2- Main Menu");
         System.out.println("This All Orders You Order Them : ");
+        System.out.println("--------------------------");
         String stringResponse = scanner.nextLine();
         if (!MainView.isNumeric(stringResponse)) {
             System.out.println("Please Enter Valid Response");

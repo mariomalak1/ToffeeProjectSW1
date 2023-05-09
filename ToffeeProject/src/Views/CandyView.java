@@ -42,18 +42,22 @@ public class CandyView {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             if (user.isAdmin()) {
+                System.out.println("--------------------");
                 System.out.println("1- Add New Candy");
                 System.out.println("2- Delete Specific Candy With ID");
                 System.out.println("3- Main Page");
+                System.out.println("--------------------");
             }
             else {
+                System.out.println("--------------------");
                 System.out.println("1- Create an Order");
                 System.out.println("2- Main Page");
+                System.out.println("--------------------");
             }
             CandyController candyController = new CandyController();
             // will print all candies
             candyController.getAllCandies();
-
+            System.out.println("What's Your Response : ");
             String stringResponse = scanner.nextLine();
             try{
                 int response = Integer.parseInt(stringResponse);
@@ -69,6 +73,7 @@ public class CandyView {
     public static void createNewCandy(Models.User user){
         CandyController candyController = new CandyController();
         Scanner scanner = new Scanner(System.in);
+        System.out.println("--------------------");
         System.out.println("Welcome in Create New Candy page");
 
         System.out.println("Enter Candy Name : ");
