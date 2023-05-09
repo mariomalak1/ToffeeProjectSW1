@@ -2,6 +2,7 @@ package Views;
 
 import java.util.Scanner;
 import Controllers.UserController;
+import Models.Candy;
 
 
 public class UserView {
@@ -81,12 +82,11 @@ public class UserView {
         MainView.runApplication();
     }
 
-
     // Customer Page
     public static void ViewCustomerPage(){
         int response;
         while (true) {
-            System.out.println("1- Display All Product To Pay");
+            System.out.println("1- All Candies");
             System.out.println("2- Check Out");
             System.out.println("3- Logout");
             System.out.println("What's Your Response : ");
@@ -105,6 +105,12 @@ public class UserView {
         if (response == 3){
             Logout();
         }
+        else if (response == 1){
+            CandyView.listAllCandies(false);
+        }
+        else if (response == 2){
+            CartView.checkOut();
+        }
         else{
             System.out.println("Enter Valid Response");
         }
@@ -116,8 +122,8 @@ public class UserView {
         System.out.println("Welcome Admin Page");
         while (true) {
             System.out.println("1- Registration For New Admin");
-            System.out.println("2- Display all Products");
-            System.out.println("3- Create New Product");
+            System.out.println("2- All Candies");
+            System.out.println("3- All Orders");
             System.out.println("4- Logout");
             System.out.println("What's Your Response : ");
             Scanner sc = new Scanner(System.in);
@@ -137,6 +143,12 @@ public class UserView {
         }
         else if(response == 1){
             UserView.registrationForAdmin();
+        }
+        else if (response == 2){
+            CandyView.listAllCandies(true);
+        }
+        else if (response == 3){
+            CartView.allCarts();
         }
         else{
             System.out.println("Enter Valid Response");

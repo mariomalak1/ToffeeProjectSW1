@@ -29,18 +29,16 @@ public class UnitController {
         return null;
     }
 
-    public void getUnitByID(int unitID) {
+    public Models.Unit getUnitByID(int unitID) {
         try {
             Unit unit = unitRepository.getUnitById(unitID);
             if (unit != null) {
-                System.out.println("Unit ID: " + unit.getID());
-                System.out.println("Unit Name: " + unit.getUnitName());
-            } else {
-                System.out.println("Unit not found.");
+                return unit;
             }
         } catch (Exception e) {
             System.out.println("Failed to retrieve unit: " + e.getMessage());
         }
+        return null;
     }
 
     public void updateUnitName(int unitID, String newUnitName) {

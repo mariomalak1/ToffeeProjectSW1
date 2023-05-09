@@ -1,33 +1,29 @@
 package Controllers;
-
-import java.sql.Connection;
 import java.util.List;
 
 import Models.Candy;
 import Models.Unit;
 import Repositories.CandyRepository;
-import Repositories.DatabaseInitializer;
 
 public class CandyController {
     private final CandyRepository candyRepository;
-    private final Connection connection;
 
     public CandyController() {
         candyRepository = new CandyRepository();
-        connection = DatabaseInitializer.getConnection();
     }
 
-    public void createCandy(String name, double price, String unitName, int categoryID, int loyaltyPoints, int adminIDCreatedBy, String description, String imagePath) {
+    public boolean createCandy(String name, double price, String unitName, int categoryID, int loyaltyPoints, int adminIDCreatedBy, String description, String imagePath) {
         try {
             UnitController unitController = new UnitController();
             Unit unit_ = unitController.createUnit(unitName);
 
             Candy candy = new Candy(name, price, unit_, categoryID, loyaltyPoints, adminIDCreatedBy, description, imagePath);
             candyRepository.addCandy(candy);
-            System.out.println("Candy created successfully.");
+            return true;
         } catch (Exception e) {
             System.out.println("Failed to create candy: " + e.getMessage());
         }
+        return false;
     }
 
     public void updateCandy(int candyID, String name, double price, String unitName, int categoryID, int loyaltyPoints, int adminIDCreatedBy, String description, String imagePath) {
@@ -68,26 +64,26 @@ public class CandyController {
         }
     }
 
-    public void getCandyDetails(int candyID) {
+    public Models.Candy getCandyDetails(int candyID) {
         try {
             Candy candy = candyRepository.getCandyById(candyID);
             if (candy != null) {
-                System.out.println("Candy Details:");
-                System.out.println("ID: " + candy.getID());
-                System.out.println("Name: " + candy.getName());
-                System.out.println("Price: " + candy.getPrice());
-                System.out.println("Unit: " + candy.getUnit());
-                System.out.println("Category ID: " + candy.getCategoryID());
-                System.out.println("Loyalty Points: " + candy.getLoyaltyPoints());
-                System.out.println("Admin ID Created By: " + candy.getAdminIDCreatedBY());
-                System.out.println("Description: " + candy.getDescription());
-                System.out.println("Image Path: " + candy.getImagePath());
-            } else {
-                System.out.println("Candy not found.");
+                return candy;
+//                System.out.println("Candy Details:");
+//                System.out.println("ID: " + candy.getID());
+//                System.out.println("Name: " + candy.getName());
+//                System.out.println("Price: " + candy.getPrice());
+//                System.out.println("Unit: " + candy.getUnit());
+//                System.out.println("Category ID: " + candy.getCategoryID());
+//                System.out.println("Loyalty Points: " + candy.getLoyaltyPoints());
+//                System.out.println("Admin ID Created By: " + candy.getAdminIDCreatedBY());
+//                System.out.println("Description: " + candy.getDescription());
+//                System.out.println("Image Path: " + candy.getImagePath());
             }
         } catch (Exception e) {
             System.out.println("Failed to get candy details: " + e.getMessage());
         }
+        return null;
     }
 
     public void getAllCandies() {
