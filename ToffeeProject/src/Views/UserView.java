@@ -4,7 +4,7 @@ import java.util.Scanner;
 import Controllers.UserController;
 
 
-public class User {
+public class UserView {
 
     // user views
     private static void createUserForRegistration(boolean admin){
@@ -136,7 +136,7 @@ public class User {
             Logout();
         }
         else if(response == 1){
-            User.registrationForAdmin();
+            UserView.registrationForAdmin();
         }
         else{
             System.out.println("Enter Valid Response");

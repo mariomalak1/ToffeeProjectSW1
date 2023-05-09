@@ -29,7 +29,7 @@ public class CustomerRepository {
     }
 
     public Customer getCustomerById(int id) throws SQLException {
-        String query = "SELECT * FROM Customer WHERE ID = ?";
+        String query = "SELECT * FROM User WHERE ID = ?";
         Customer customer = null;
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -45,7 +45,7 @@ public class CustomerRepository {
     }
 
     public List<Customer> getAllCustomers() throws SQLException {
-        String query = "SELECT * FROM Customer";
+        String query = "SELECT * FROM User";
         List<Customer> customers = new ArrayList<>();
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -61,7 +61,7 @@ public class CustomerRepository {
     }
 
     public void updateCustomer(Customer customer) throws SQLException {
-        String query = "UPDATE Customer SET Name = ?, Email = ?, Password = ?, PhoneNumber = ?, Admin = ? WHERE ID = ?";
+        String query = "UPDATE User SET Name = ?, Email = ?, Password = ?, PhoneNumber = ?, Admin = ? WHERE ID = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, customer.getName());
@@ -75,7 +75,7 @@ public class CustomerRepository {
     }
 
     public void deleteCustomer(Customer customer) throws SQLException {
-        String query = "DELETE FROM Customer WHERE ID = ?";
+        String query = "DELETE FROM User WHERE ID = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, customer.getID());
@@ -90,6 +90,8 @@ public class CustomerRepository {
         String password = resultSet.getString("Password");
         String phoneNumber = resultSet.getString("PhoneNumber");
         boolean admin = resultSet.getBoolean("Admin");
-        return new Customer(name, email, password, phoneNumber, admin);
+        Customer customer =  new Customer(name, email, password, phoneNumber, admin);
+        customer.setID(id);
+        return customer;
     }
 }

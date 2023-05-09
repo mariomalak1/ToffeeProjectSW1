@@ -35,4 +35,8 @@ public class Order {
     public int getCandyId() {
         return candyId;
     }
+
+    public void setID(int id){
+        this.id = id;
+    }
 }

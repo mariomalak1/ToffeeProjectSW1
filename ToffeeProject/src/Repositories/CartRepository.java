@@ -78,6 +78,8 @@ public class CartRepository {
     private Cart mapCart(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("ID");
         int customerID = resultSet.getInt("CustomerID");
-        return new Cart(customerID);
+        Cart cart = new Cart(customerID);
+        cart.setID(id);
+        return cart;
     }
 }

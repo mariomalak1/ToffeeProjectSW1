@@ -17,10 +17,10 @@ public class MainView {
             System.exit(0);
         }
         else if(response == 1){
-            User.registrationForCustomer();
+            UserView.registrationForCustomer();
         }
         else if (response == 2){
-            User.Login();
+            UserView.Login();
         }
         else{
             System.out.println("Enter Valid Response");

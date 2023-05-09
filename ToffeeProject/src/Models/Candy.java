@@ -2,7 +2,7 @@ package Models;
 import java.time.LocalDateTime;
 
 public class Candy{
-    private final int ID;
+    private int ID;
     private String Name;
     private double Price;
     private Unit Unit;
@@ -98,5 +98,9 @@ public class Candy{
 
     public void setUnit(Unit unit) {
         this.Unit = unit;
+    }
+
+    public void setID(int id){
+        ID = id;
     }
 }

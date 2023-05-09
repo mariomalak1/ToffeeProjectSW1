@@ -110,7 +110,9 @@ public class CandyRepository {
         UnitRepository unitRepository = new UnitRepository();
         Unit unit = unitRepository.getUnitById(unitId);
 
-        return new Candy(name, price, unit, categoryId, loyaltyPoints, adminIdCreatedBY, description, imagePath);
+        Candy candy =  new Candy(name, price, unit, categoryId, loyaltyPoints, adminIdCreatedBY, description, imagePath);
+        candy.setID(id);
+        return candy;
     }
 }
 

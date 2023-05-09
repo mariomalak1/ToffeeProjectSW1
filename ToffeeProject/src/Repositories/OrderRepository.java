@@ -85,6 +85,8 @@ public class OrderRepository {
         int candyId = resultSet.getInt("CandyID");
         int quantity = resultSet.getInt("Quantity");
         int cartId = resultSet.getInt("CartID");
-        return new Order(candyId, quantity, cartId);
+        Order order = new Order(candyId, quantity, cartId);
+        order.setID(id);
+        return order;
     }
 }

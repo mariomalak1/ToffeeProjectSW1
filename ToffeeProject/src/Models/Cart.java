@@ -79,4 +79,8 @@ public class Cart {
         }
         return null; // Voucher with voucherId not found
     }
+
+    public void setID(int id){
+        ID = id;
+    }
 }

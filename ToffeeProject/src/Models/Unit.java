@@ -1,7 +1,7 @@
 package Models;
 
 public class Unit {
-    private final int ID;
+    private int ID;
     public String unitName;
     private static int LastID = 0;
 
@@ -21,5 +21,9 @@ public class Unit {
 
     public void setUnitName(String unitName) {
         this.unitName = unitName;
+    }
+
+    public void setID(int id){
+        this.ID = id;
     }
 }

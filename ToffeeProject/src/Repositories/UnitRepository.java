@@ -78,6 +78,8 @@ public class UnitRepository {
     private Unit mapUnit(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("ID");
         String unitName = resultSet.getString("unitName");
-        return new Unit(unitName);
+        Unit unit = new Unit(unitName);
+        unit.setID(id);
+        return unit;
     }
 }

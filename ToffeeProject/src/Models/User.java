@@ -76,6 +76,10 @@ public class User {
         return ID;
     }
 
+    public void setID(int id){
+        ID = id;
+    }
+
     public void makeActive(){
         Active = true;
     }
