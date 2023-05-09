@@ -4,8 +4,10 @@ import Controllers.CandyController;
 import Controllers.CartController;
 import Controllers.CustomerController;
 import Controllers.OrderController;
+import Models.Cart;
 import Models.Customer;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class OrderView {
@@ -51,14 +53,6 @@ public class OrderView {
         else{
             System.out.println("Sorry You Don't Login Yet, PLease Try Again");
             MainView.runApplication();
-        }
-    }
-
-    // Admin View
-    public static void allOrders(Models.User user){
-        if (user.isAdmin()){
-            CartController cartController = new CartController();
-//            cartController.get();
         }
     }
 }

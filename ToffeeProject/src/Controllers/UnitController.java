@@ -16,7 +16,7 @@ public class UnitController {
         try {
             for (Unit unit : unitRepository.getAllUnits()) {
                 if (unit.getUnitName().equals(unitName)){
-                    return null;
+                    return unit;
                 }
             }
             Unit unit = new Unit(unitName);

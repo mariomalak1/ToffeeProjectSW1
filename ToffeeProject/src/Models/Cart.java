@@ -1,5 +1,7 @@
 package Models;
 
+import Controllers.CandyController;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,5 +98,14 @@ public class Cart {
 
     public void setFinished(boolean finished){
         Finished = finished;
+    }
+
+    public double getTotalCostOfCart(){
+        double total = 0;
+        for (Order order: Orders) {
+            Candy candyOfOrder = new CandyController().getCandyDetails(order.getCandyId());
+            total += (order.getQuantity() * candyOfOrder.getPrice());
+        }
+        return total;
     }
 }

@@ -1,6 +1,7 @@
 package Controllers;
 
 import Models.Cart;
+import Models.User;
 import Repositories.CartRepository;
 import Repositories.CustomerRepository;
 import java.util.List;
@@ -13,9 +14,21 @@ public class CustomerController {
         this.customerRepository = new CustomerRepository();
     }
 
-    public void createCustomer(String name, String email, String password, String phoneNumber, boolean isAdmin) {
+    public void createCustomer(User user, int points){
+        try{
+            Customer customer = new Customer(user, points);
+            customer.setID(user.getID());
+            customerRepository.addCustomer(customer);
+        }
+        catch (Exception e) {
+            System.out.println("Failed to create customer: " + e.getMessage());
+        }
+    }
+    public void createCustomer(String name, String email, String password, String phoneNumber, boolean isAdmin, int userID) {
         try {
             Customer customer = new Customer(name, email, password, phoneNumber, isAdmin);
+            customer.setID(userID);
+
             customerRepository.addCustomer(customer);
         } catch (Exception e) {
             System.out.println("Failed to create customer: " + e.getMessage());

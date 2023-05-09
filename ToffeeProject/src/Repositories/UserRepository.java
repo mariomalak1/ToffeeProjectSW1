@@ -12,11 +12,11 @@ public class UserRepository {
         this.connection = DatabaseInitializer.getConnection();
     }
 
-    public void addUser(User user) throws SQLException {
+    public User addUser(User user) throws SQLException {
         String query = "INSERT INTO User (Name, Email, Password, PhoneNumber, Active, IsAdmin) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getPassword());
@@ -24,9 +24,25 @@ public class UserRepository {
             statement.setBoolean(5, user.isActive());
             statement.setBoolean(6, user.isAdmin());
 
-            statement.executeUpdate();
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected == 0) {
+                throw new SQLException("Adding user failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int generatedID = generatedKeys.getInt(1);
+                    user.setID(generatedID);
+                } else {
+                    throw new SQLException("Adding user failed, no ID obtained.");
+                }
+            }
         }
+
+        return user;
     }
+
 
     public void deleteUser(int userId) throws SQLException {
         String query = "DELETE FROM User WHERE ID = ?";
@@ -43,6 +59,7 @@ public class UserRepository {
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
+
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

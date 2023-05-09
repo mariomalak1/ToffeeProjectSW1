@@ -45,12 +45,15 @@ public class CandyView {
                 System.out.println("1- Add New Candy");
                 System.out.println("2- Delete Specific Candy With ID");
                 System.out.println("3- Main Page");
-            } else {
+            }
+            else {
                 System.out.println("1- Create an Order");
                 System.out.println("2- Main Page");
             }
             CandyController candyController = new CandyController();
+            // will print all candies
             candyController.getAllCandies();
+
             String stringResponse = scanner.nextLine();
             try{
                 int response = Integer.parseInt(stringResponse);

@@ -16,7 +16,7 @@ public class UserController {
     public User createUser(String name, String email, String password, String phoneNumber, boolean admin) {
         try {
             User user = new User(name, email, password, phoneNumber, admin);
-            userRepository.addUser(user);
+            user = userRepository.addUser(user);
             return user;
         } catch (SQLException e) {
             System.out.println("Failed to create user: " + e.getMessage());

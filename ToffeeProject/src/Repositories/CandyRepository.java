@@ -15,8 +15,8 @@ public class CandyRepository {
     }
 
     public void addCandy(Candy candy) throws SQLException {
-        String sql = "INSERT INTO Candy (Name, Price, UnitID, CategoryID, LoyaltyPoints, AdminIDCreatedBY, TimeCreatedAt, Description, ImagePath) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Candy (Name, Price, UnitID, CategoryID, LoyaltyPoints, AdminIDCreatedBY, Description, ImagePath) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, candy.getName());
@@ -25,9 +25,8 @@ public class CandyRepository {
             statement.setInt(4, candy.getCategoryID());
             statement.setInt(5, candy.getLoyaltyPoints());
             statement.setInt(6, candy.getAdminIDCreatedBY());
-            statement.setTimestamp(7, Timestamp.valueOf(candy.getTimeCreatedAt()));
-            statement.setString(8, candy.getDescription());
-            statement.setString(9, candy.getImagePath());
+            statement.setString(7, candy.getDescription());
+            statement.setString(8, candy.getImagePath());
 
             statement.executeUpdate();
         }
@@ -67,7 +66,7 @@ public class CandyRepository {
 
     public void updateCandy(Candy candy) throws SQLException {
         String sql = "UPDATE Candy SET Name = ?, Price = ?, UnitID = ?, CategoryID = ?, LoyaltyPoints = ?, " +
-                "AdminIDCreatedBY = ?, TimeCreatedAt = ?, Description = ?, ImagePath = ? WHERE ID = ?";
+                "AdminIDCreatedBY = ?, Description = ?, ImagePath = ? WHERE ID = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, candy.getName());
@@ -102,7 +101,6 @@ public class CandyRepository {
         int categoryId = resultSet.getInt("CategoryID");
         int loyaltyPoints = resultSet.getInt("LoyaltyPoints");
         int adminIdCreatedBY = resultSet.getInt("AdminIDCreatedBY");
-        LocalDateTime timeCreatedAt = resultSet.getTimestamp("TimeCreatedAt").toLocalDateTime();
         String description = resultSet.getString("Description");
         String imagePath = resultSet.getString("ImagePath");
 

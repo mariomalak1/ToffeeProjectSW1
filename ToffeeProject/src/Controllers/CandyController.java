@@ -95,12 +95,7 @@ public class CandyController {
                     System.out.println("ID: " + candy.getID());
                     System.out.println("Name: " + candy.getName());
                     System.out.println("Price: " + candy.getPrice());
-                    System.out.println("Unit: " + candy.getUnit());
-                    System.out.println("Category ID: " + candy.getCategoryID());
-                    System.out.println("Loyalty Points: " + candy.getLoyaltyPoints());
-                    System.out.println("Admin ID Created By: " + candy.getAdminIDCreatedBY());
-                    System.out.println("Description: " + candy.getDescription());
-                    System.out.println("Image Path: " + candy.getImagePath());
+                    System.out.println("Unit: " + candy.getUnit().getUnitName());
                     System.out.println("------------------------");
                 }
             } else {

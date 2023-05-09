@@ -42,16 +42,12 @@ public class DatabaseInitializer {
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "Name TEXT NOT NULL," +
                 "Price REAL NOT NULL," +
-                "UnitID INTEGER NOT NULL," +
-                "CategoryID INTEGER NOT NULL," +
                 "LoyaltyPoints INTEGER NOT NULL," +
-                "AdminIDCreatedBY INTEGER NOT NULL," +
-                "TimeCreatedAt TEXT NOT NULL," +
                 "Description TEXT," +
                 "ImagePath TEXT," +
-                "FOREIGN KEY (UnitID) REFERENCES Unit(ID)," +
-                "FOREIGN KEY (CategoryID) REFERENCES Category(ID)," +
-                "FOREIGN KEY (AdminIDCreatedBY) REFERENCES User(ID)" +
+                "UnitID INTEGER," +
+                "CategoryID INTEGER," +
+                "AdminIDCreatedBY INTEGER" +
                 ")";
         executeStatement(conn, sql);
     }

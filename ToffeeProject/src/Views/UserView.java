@@ -1,13 +1,15 @@
 package Views;
 
 import java.util.Scanner;
+
+import Controllers.CustomerController;
 import Controllers.UserController;
 import Models.User;
 
 public class UserView {
 
     // user views
-    private static void createUserForRegistration(boolean admin){
+    private static User createUserForRegistration(boolean admin){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome in Registration page");
 
@@ -30,6 +32,11 @@ public class UserView {
         if (user == null){
             System.out.println("Sorry For This Error");
             createUserForRegistration(admin);
+            return null;
+        }else {
+            System.out.println("Registration Done Successfully, You Can Login Now");
+            System.out.println("You ID : " + user.getID() + " Remember It As You Will Login With It");
+            return user;
         }
     }
 
@@ -38,7 +45,13 @@ public class UserView {
     }
 
     public static void registrationForCustomer(){
-        createUserForRegistration(false);
+        User user = createUserForRegistration(false);
+        if (user == null){
+            System.out.println("Error Happen, Try To Register Agian");
+        }else {
+            CustomerController customerController = new CustomerController();
+            customerController.createCustomer(user, 0);
+        }
     }
 
     public static Models.User Login(){
@@ -63,8 +76,8 @@ public class UserView {
         Models.User user = userController.getUserById(int_id);
 
         if (user != null){
-            user.setActive(true);
             if (user.getPassword().equals(password)){
+                user.setActive(true);
                 System.out.println(user.getName() +" You Login Successfully");
                 if (user.isAdmin()){
                     ViewAdminPage(user);
@@ -152,7 +165,7 @@ public class UserView {
             CandyView.listAllCandies(user);
         }
         else if (response == 3){
-            CartView.allCarts(user);
+            CartView.allCartsNotFinished(user);
         }
         else{
             System.out.println("Enter Valid Response");
