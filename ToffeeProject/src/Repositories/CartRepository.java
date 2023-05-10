@@ -95,6 +95,24 @@ public class CartRepository {
         return unfinishedCarts;
     }
 
+    public List<Cart> getAllFinishedCarts() throws SQLException {
+        List<Cart> unfinishedCarts = new ArrayList<>();
+        String sql = "SELECT * FROM Cart WHERE Finished = 1";
+
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Cart cart = mapCart(resultSet);
+                    List<Order> orders = new OrderController().getAllOrdersInCart(cart.getID());
+                    cart.setOrders(orders);
+                    unfinishedCarts.add(cart);
+                }
+            }
+        }
+
+        return unfinishedCarts;
+    }
+
     public List<Cart> getAlCarts() throws SQLException {
         List<Cart> Carts = new ArrayList<>();
         String sql = "SELECT * FROM Cart";
@@ -103,6 +121,8 @@ public class CartRepository {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Cart cart = mapCart(resultSet);
+                    List<Order> ordersOfCart = new OrderController().getAllOrdersInCart(cart.getID());
+                    cart.setOrders(ordersOfCart);
                     Carts.add(cart);
                 }
             }

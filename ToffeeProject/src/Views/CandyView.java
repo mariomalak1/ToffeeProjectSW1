@@ -41,6 +41,9 @@ public class CandyView {
     public static void listAllCandies(Models.User user){
         Scanner scanner = new Scanner(System.in);
         while (true) {
+            CandyController candyController = new CandyController();
+            // will print all candies
+            candyController.getAllCandies();
             if (user.isAdmin()) {
                 System.out.println("--------------------");
                 System.out.println("1- Add New Candy");
@@ -54,9 +57,6 @@ public class CandyView {
                 System.out.println("2- Main Page");
                 System.out.println("--------------------");
             }
-            CandyController candyController = new CandyController();
-            // will print all candies
-            candyController.getAllCandies();
             System.out.println("What's Your Response : ");
             String stringResponse = scanner.nextLine();
             try{

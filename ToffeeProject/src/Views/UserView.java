@@ -60,13 +60,13 @@ public class UserView {
 
         System.out.println("Enter Your ID : ");
         String id = scanner.nextLine();
-        int int_id = 0;
+        int int_id;
         try {
             int_id = Integer.parseInt(id);
         }
-        catch (NullPointerException ignored){
+        catch (NumberFormatException e){
             System.out.println("Please Enter Valid ID");
-            Login();
+            return null;
         }
 
         System.out.println("Enter Your Password : ");
@@ -85,8 +85,10 @@ public class UserView {
                 }else{
                     ViewCustomerPage(user);
                 }
+                return user;
             }else{
                 System.out.println("You Enter Incorrect Password, Try Again");
+                return null;
             }
         }else{
             System.out.println("You Are Not In The System Or You Enter A non Valid ID");

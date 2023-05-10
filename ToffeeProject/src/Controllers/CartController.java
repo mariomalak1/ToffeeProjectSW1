@@ -102,9 +102,9 @@ public class CartController {
         return cart;
     }
 
-    public List<Cart> getAllUnFinishedCarts(){
+    public List<Cart> getAllFinishedCarts(){
         try {
-            List<Cart> carts = cartRepository.getAlCarts();
+            List<Cart> carts = cartRepository.getAllFinishedCarts();
             if (!carts.isEmpty()){
                 return carts;
             }

@@ -86,7 +86,7 @@ public class CartView {
     public static void allCartsNotFinished(Models.User user){
         if (user.isAdmin()){
             CartController cartController = new CartController();
-            List<Cart> carts = cartController.getAllUnFinishedCarts();
+            List<Cart> carts = cartController.getAllFinishedCarts();
             if (carts.isEmpty()){
                 System.out.println("No Orders Created Yet");
             }
